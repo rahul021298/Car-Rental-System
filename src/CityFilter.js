@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Dropdown, DropdownButton} from 'react-bootstrap';
 import {Card} from './Card'
+// import $ from 'jquery';
 export class CityFilter extends Component {
     constructor(props) {
         super(props)
@@ -10,31 +11,47 @@ export class CityFilter extends Component {
         }
     }
     
-    handleSelect=(evt,evtKey)=> {
+    handleSelect=(data)=> {
         // what am I suppose to write in there to get the val?
-        if(evt == 1){
-            this.setState({
-                value: {Card}
-            })
-            console.log(this.state)
+        var str="";
+        if(data ==1){
+            str = <div><Card /></div>;
+        }else if(data == 2){
+            str = <div><Card /><Card /></div>;
+        }else if(data==3){
+            str = <div><Card /> <Card /> <Card/></div>
         }
+            this.setState({
+                value: str
+            })
+            // alert('INSIDE ACTIONS '+data);
+            // // console.log({Card});
+            // $('#dcardContent').append(this.state.value);
+       
         
-    }    
+    }
+    componentDidMount(){
+        // $('DropdownButton')
+            
+        
+    } 
     render() {
+        
         return (
-            <div className="Container col-md-8">
-                <DropdownButton id="dropdown-basic-button" title="Select City" onSelect={this.state.value=this.handleSelect}>
-                <Dropdown.Item eventKey="1" val="1" href="./booked1">Mumbai</Dropdown.Item>
-                <Dropdown.Item eventKey="2" href="./booked2">Pune</Dropdown.Item>
-                <Dropdown.Item eventKey="3" href="./booked3">Bangalore</Dropdown.Item>
+            <div>
+                <div className="Container col-md-8">
+                <DropdownButton id="dropdown-basic-button" title="Select City" onSelect={()=>this.handleSelect}>
+                <Dropdown.Item onClick={()=>this.handleSelect(1)}>Mumbai</Dropdown.Item>
+                <Dropdown.Item onClick={()=>this.handleSelect(2)}>Pune</Dropdown.Item>
+                <Dropdown.Item onClick={()=>this.handleSelect(3)}>Bangalore</Dropdown.Item>
                 </DropdownButton>
+            </div>
 
-                <div>
-                    {this.state.value}
-                </div>
+                {this.state.value}
             </div>
         )
     }
 }
 
 export default CityFilter
+
